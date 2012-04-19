@@ -1,0 +1,919 @@
+?fracprolif
+data(ca1d.erlotinib)
+plot(ca1d.erlotinib$Birthtime,#
+     ca1d.erlotinib$Lifespan,#
+     main="CA1d 16µM erlotinib",#
+     xlab="Birth time (h)",#
+     ylab="Lifespan (h)",#
+     ylim=c(5,90), xlim=c(0,25))
+mitotic.lifespans <- subset(ca1d.erlotinib,  !End.of.Movie & #
+                                             !Death        & #
+                                             !is.na(Lifespan))$Lifespan#
+#
+censored.lifespans <- subset(ca1d.erlotinib, End.of.Movie  & #
+                                             !Death        & #
+                                             !is.na(Lifespan))$Lifespan#
+#
+hist(mitotic.lifespans,main='CA1d 16µM',sub="Observed Intermitotic Times (h)", breaks=20)
+est <- q.mle.emg.estimate(mitotic.lifespans, censored.lifespans)#
+#
+  summary(est)
+   mle(function(mean, sd, Q){#
+     qsurvival.nllik("norm", mitotic.lifespans, censored.lifespans, Q, mean, sd)#
+   },#
+   method='L-BFGS-B',#
+   lower=list(mean=8,  sd=0.1, Q=0.01),#
+   upper=list(mean=30, sd=20,  Q=0.9),#
+   start=list(mean=mean(mitotic.lifespans), #
+              sd=sd(mitotic.lifespans),#
+              Q = 0.5))
+r <- q.rates("emg", est)#
+r
+data(ca1d.erlotinib.totals)
+# y is in terms of doublings, i.e. base log(2)#
+y <- ca1d.erlotinib.totals$e_16000 - ca1d.erlotinib.totals$e_16000[1]#
+t <- ca1d.erlotinib.totals$Time_h#
+#
+# Let the death rates float#
+fit <- nls(y ~ log(prolif_tot(t, 1, 0, r[1], r[2], ad, aq), 2),#
+           start=list(ad=0.003, aq=0.003),#
+           lower=list(ad=0, aq=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+plot (t,y, main="CA1d 16µM", xlab="Time (h)", ylab="Population Doublings", ylim=c(0,1.2), xlim=c(0,96))#
+#
+model.total <- log(prolif_tot(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']), 2)#
+#
+lines(t,model.total,col="green")#
+lines(t,model.total*prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']), col="red")#
+lines(t,model.total*prolif_fd(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']), col="blue")
+library(fracprolif)
+?fracprolif
+library(fracprolif)
+?fracprolif
+data(ca1d.erlotinib)
+ca1d.erlotinib$Lifespan
+sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)
+ca1d.erlotinib[ca1d.erlotinib$Death]
+ca1d.erlotinib[ca1d.erlotinib$Death,]
+sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)
+length(ca1d.erlotinib[ca1d.erlotinib$Death,]$Lifespan)
+14/9366.7
+0.001494657*2
+?fracprolif
+library(fracprolif)
+?fracprolif
+data(ca1d.erlotinib)
+length(ca1d.erlotinib[ca1d.erlotinib$Death,]$Lifespan)/sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)
+a_tot <- length(ca1d.erlotinib[ca1d.erlotinib$Death,]$Lifespan)/#
+         sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)
+a_tot
+prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq'])
+y <- ca1d.erlotinib.totals$e_16000 - ca1d.erlotinib.totals$e_16000[1]#
+t <- ca1d.erlotinib.totals$Time_h#
+#
+# Let the death rates float#
+fit <- nls(y ~ log(prolif_tot(t, 1, 0, r['d'], r['q'], ad, aq), 2),#
+           start=list(ad=0.003, aq=0.003),#
+           lower=list(ad=0, aq=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+data(ca1d.erlotinib.totals)
+y <- ca1d.erlotinib.totals$e_16000 - ca1d.erlotinib.totals$e_16000[1]#
+t <- ca1d.erlotinib.totals$Time_h#
+#
+# Let the death rates float#
+fit <- nls(y ~ log(prolif_tot(t, 1, 0, r['d'], r['q'], ad, aq), 2),#
+           start=list(ad=0.003, aq=0.003),#
+           lower=list(ad=0, aq=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+  est <- q.mle.emg.estimate(mitotic.lifespans, censored.lifespans)#
+#
+  summary(est)
+mitotic.lifespans <- subset(ca1d.erlotinib,  !End.of.Movie & #
+                                             !Death        & #
+                                             !is.na(Lifespan))$Lifespan#
+#
+censored.lifespans <- subset(ca1d.erlotinib, End.of.Movie  & #
+                                             !Death        & #
+                                             !is.na(Lifespan))$Lifespan
+  est <- q.mle.emg.estimate(mitotic.lifespans, censored.lifespans)#
+#
+  summary(est)
+r <- q.rates("emg", est)#
+r
+fit <- nls(y ~ log(prolif_tot(t, 1, 0, r['d'], r['q'], ad, aq), 2),#
+           start=list(ad=0.003, aq=0.003),#
+           lower=list(ad=0, aq=0),#
+           algorithm="port")#
+a <- coef(fit)
+fit
+a
+prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq'])
+mean(prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']))
+a_tot /  mean(prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']))
+summary(a)
+a
+stderr(a)
+sderr(a)
+a_tot /  mean(prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']))
+a_tot
+?nls
+confint[a]
+confint[fit]
+confint(fit)
+?pchi
+?pchi2
+?pchisquared
+help.search('chisquared')
+pchisq(0.05/2, )
+?pchisq
+pchisq(0.05/2, 0.035*2, lower.tail=TRUE)
+pchisq(0.05/2, 0.035*2, lower.tail=FALSE)
+pchisq(0.05/2, 0.035, lower.tail=FALSE)
+pchisq(0.05/2, 0.035*2, lower.tail=FALSE)
+pchisq(1-0.05/2, (0.035+1)*2, lower.tail=FALSE)
+dchisq(1-0.05/2, (0.035+1)*2, lower.tail=FALSE)
+dchisq(1-0.05/2, (0.035+1)*2)
+pchisq(1-0.05/2, (0.035+1)*2, lower.tail=TRUE)
+pchisq(0.05/2, 2, lower.tail=TRUE)
+pchisq(0.05/2, 2, lower.tail=TRUE)/2
+0.035 - pchisq(0.05/2, 2, lower.tail=TRUE)/2
+0.035 + pchisq(0.05/2, 2, lower.tail=FALSE)/2
+qchisq(0.05/2, 2, )
+qchisq(0.05/2, 2)/2
+pchisq(0.05/2, 2, 2*0.035)
+pchisq(0.05/2, 2, 2*0.035)/2
+qchisq(0.05/2, 2*0.035)
+qchisq(0.05/2, 2, 2*0.035)
+qchisq(0.05/2, 2, 2*0.035)/2
+qchisq(2*0.035, 0.05/2)/2
+?qchisq
+sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)
+q_observed
+  q_observed <- sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)*#
+                mean(prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']))
+events <- length(ca1d.erlotinib[ca1d.erlotinib$Death,]$Lifespan)
+events
+q_observed
+qchisq(0.975, 2*events)/2/q_observed
+qchisq(0.025, 2*(events+1))/2/q_observed
+qchisq(0.025, 2)/2/q_observed
+qchisq(0.025, 2*(events+1))/2/q_observed
+qchisq(0.025, 2*14)/2/400
+qchisq(0.975, 2*15)/2/400
+events <- length(ca1d.erlotinib[ca1d.erlotinib$Death,]$Lifespan)#
+observations <- sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)#
+a_tot <- events/observations
+ mean(prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']))#
+  q_observed <- observations*mean(prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']))
+   lower_aq <- qchisq(0.025, 2*events)/2/q_observed#
+   upper_aq <- qchisq(0.975, 2*(events+1))/2/q_observed
+lower_aq
+upper_aq
+confint(fit)
+library(fracprolif)
+?fracprolif
+data(ca1d.erlotinib)
+plot(ca1d.erlotinib$Birthtime,#
+     ca1d.erlotinib$Lifespan,#
+     main="CA1d 16µM erlotinib",#
+     xlab="Birth time (h)",#
+     ylab="Lifespan (h)",#
+     ylim=c(5,90), xlim=c(0,25))
+mitotic.lifespans <- subset(ca1d.erlotinib,  !End.of.Movie & #
+                                             !Death        & #
+                                             !is.na(Lifespan))$Lifespan#
+#
+censored.lifespans <- subset(ca1d.erlotinib, End.of.Movie  & #
+                                             !Death        & #
+                                             !is.na(Lifespan))$Lifespan
+hist(mitotic.lifespans,#
+     main='CA1d 16µM',#
+     sub="Observed Intermitotic Times (h)",#
+     breaks=20)
+ est <- q.mle.emg.estimate(mitotic.lifespans, censored.lifespans)#
+#
+  summary(est)
+   mle(function(mean, sd, Q){#
+     qsurvival.nllik("norm", mitotic.lifespans, censored.lifespans, Q, mean, sd)#
+   },#
+   method='L-BFGS-B',#
+   lower=list(mean=8,  sd=0.1, Q=0.01),#
+   upper=list(mean=30, sd=20,  Q=0.9),#
+   start=list(mean=mean(mitotic.lifespans), #
+              sd=sd(mitotic.lifespans),#
+              Q = 0.5))
+r <- q.rates("emg", est)#
+r
+data(ca1d.erlotinib.totals)
+y <- ca1d.erlotinib.totals$e_16000 - ca1d.erlotinib.totals$e_16000[1]#
+t <- ca1d.erlotinib.totals$Time_h#
+#
+# Let the death rates float#
+fit <- nls(y ~ log(prolif_tot(t, 1, 0, r['d'], r['q'], ad, aq), 2),#
+           start=list(ad=0.003, aq=0.003),#
+           lower=list(ad=0, aq=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+events <- length(ca1d.erlotinib[ca1d.erlotinib$Death,]$Lifespan)#
+observations <- sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)#
+a_tot <- events/observations
+  mean(prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']))#
+  q_observed <- observations*mean(prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']))
+   lower_aq <- qchisq(0.025, 2*events)/2/q_observed#
+   upper_aq <- qchisq(0.975, 2*(events+1))/2/q_observed
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))
+model.total <- log(prolif_tot(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']), 2)#
+#
+lines(t,model.total,col="green")#
+lines(t,model.total*prolif_fq(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']), col="red")#
+lines(t,model.total*prolif_fd(t, 1, 0, r['d'], r['q'], a['ad'], a['aq']), col="blue")
+library(lmer)
+library(lme4)
+nobars
+# aclme methods and utilities#
+#
+# Most of this code was lifted from the lme4 package by Douglas Bates and adapted as needed #
+# for working with ascertainment corrected models.#
+#
+#
+#######################################################################
+### Utilities for parsing the mixed model formula#
+#
+### Return the pairs of expressions that separated by vertical bars#
+findbars <- function(term)#
+{#
+    if (is.name(term) || !is.language(term)) return(NULL)#
+    if (term[[1]] == as.name("("))           return(findbars(term[[2]]))#
+#
+    if (!is.call(term)) stop("term must be of class call")#
+#
+    if (term[[1]] == as.name('|'))           return(term)#
+    if (length(term) == 2)                   return(findbars(term[[2]]))#
+#
+    c(findbars(term[[2]]), findbars(term[[3]]))#
+}#
+#
+### Return the formula omitting the pairs of expressions that are#
+### separated by vertical bars#
+nobars <- function(term)#
+{#
+    if (!('|' %in% all.names(term))) return(term)#
+    if (is.call(term) && term[[1]] == as.name('|')) return(NULL)#
+    if (length(term) == 2) {#
+        nb <- nobars(term[[2]])#
+        if (is.null(nb)) return(NULL)#
+        term[[2]] <- nb#
+        return(term)#
+    }#
+    nb2 <- nobars(term[[2]])#
+    nb3 <- nobars(term[[3]])#
+    if (is.null(nb2)) return(nb3)#
+    if (is.null(nb3)) return(nb2)#
+    term[[2]] <- nb2#
+    term[[3]] <- nb3#
+    term#
+}#
+#
+### Substitute the '+' function for the '|' function#
+subbars <- function(term)#
+{#
+    if (is.name(term) || !is.language(term)) return(term)#
+    if (length(term) == 2) {#
+        term[[2]] <- subbars(term[[2]])#
+        return(term)#
+    }#
+    stopifnot(length(term) >= 3)#
+    if (is.call(term) && term[[1]] == as.name('|'))#
+        term[[1]] <- as.name('+')#
+    for (j in 2:length(term)) term[[j]] <- subbars(term[[j]])#
+    term#
+}#
+#
+### Substitute any names from nlist in term with 1#
+subnms <- function(term, nlist)#
+{#
+    if (!is.language(term)) return(term)#
+    if (is.name(term)) {#
+        if (any(unlist(lapply(nlist, get("=="), term)))) return(1)#
+        return(term)#
+    }#
+    stopifnot(length(term) >= 2)#
+    for (j in 2:length(term)) term[[j]] <- subnms(term[[j]], nlist)#
+    term#
+}#
+#
+### Return the list of '/'-separated terms in an expression that#
+### contains slashes#
+slashTerms <- function(x)#
+{#
+    if (!("/" %in% all.names(x))) return(x)#
+    if (x[[1]] != as.name("/"))#
+        stop("unparseable formula for grouping factor")#
+    list(slashTerms(x[[2]]), slashTerms(x[[3]]))#
+}#
+#
+### from a list of length 2 return recursive interaction terms#
+makeInteraction <- function(x)#
+{#
+    if (length(x) < 2) return(x)#
+    trm1 <- makeInteraction(x[[1]])#
+    trm11 <- if(is.list(trm1)) trm1[[1]] else trm1#
+    list(substitute(foo:bar, list(foo=x[[2]], bar = trm11)), trm1)#
+}#
+#
+### expand any slashes in the grouping factors returned by findbars#
+expandSlash <- function(bb)#
+{#
+    if (!is.list(bb)) return(expandSlash(list(bb)))#
+    ## I really do mean lapply(unlist(... - unlist returns a#
+    ## flattened list in this case#
+    unlist(lapply(bb, function(x) {#
+        if (length(x) > 2 && is.list(trms <- slashTerms(x[[3]])))#
+            return(lapply(unlist(makeInteraction(trms)),#
+                          function(trm) substitute(foo|bar,#
+                                                   list(foo = x[[2]],#
+                                                        bar = trm))))#
+        x#
+    }))#
+}
+library(lme4)
+?lmer
+library(fracprolif)
+?fracprolif
+library(fracprolif)
+?fracprolif
+data(ca1d.erlotinib)
+d <- subset(ca1d.erlotinib, !Death & !is.na(Lifespan))#
+plot(d$Birthtime,#
+     d$Lifespan,#
+     main="CA1d 16µM erlotinib",#
+     xlab="Birth time (h)",#
+     ylab="Lifespan (h)",#
+     ylim=c(5,90), xlim=c(0,25))#
+n <- length(d$Lifespan)#
+text(20,80,substitute("n" == n,list(n=n)))#
+p <- 100*length(subset(d, End.of.Movie)$Lifespan) / n#
+text(15,85,substitute(p * "% EoE", list(p=round(p))))
+mitotic.lifespans <- subset(ca1d.erlotinib,  !End.of.Movie & #
+                                             !Death        & #
+                                             !is.na(Lifespan))$Lifespan#
+#
+censored.lifespans <- subset(ca1d.erlotinib, End.of.Movie  & #
+                                             !Death        & #
+                                             !is.na(Lifespan))$Lifespan
+hist(mitotic.lifespans,#
+     main='CA1d 16µM',#
+     sub="Observed Intermitotic Times (h)",#
+     breaks=20)
+  est <- q.mle.emg.estimate(mitotic.lifespans, censored.lifespans)#
+#
+  summary(est)
+hist(mitotic.lifespans,#
+     main='CA1d 16µM',#
+     xlab="Observed Intermitotic Times (h)",#
+     breaks=20,#
+     freq=FALSE)#
+curve(demg(x, coef(est)['mu'], coef(est)['sigma'], coef(est)['lambda']), add=TRUE, col='red', lwd=2)#
+text(40, 0.07, pos=4, labels=substitute("n"==n, list(n=length(mitotic.lifespans))))#
+text(40, 0.06, pos=4, labels=substitute(mu==m, list(m=round(coef(est)['mu'],2))))#
+text(40, 0.05, pos=4, labels=substitute(sigma==s, list(s=round(coef(est)['sigma'],2))))#
+text(40, 0.04, pos=4, labels=substitute(kappa==l, list(l=round(1/coef(est)['lambda'],2))))
+r <- q.rates("emg", est)#
+r
+data(ca1d.erlotinib.totals)
+y <- ca1d.erlotinib.totals$e_16000 - ca1d.erlotinib.totals$e_16000[1]#
+t <- ca1d.erlotinib.totals$Time_h#
+#
+# Let the death rates float#
+fit <- nls(y ~ log(prolif_tot(t, 1, 0, r['d'], r['q'], a, a, 2)),#
+           start=list(a=0.003),#
+           lower=list(a=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+events <- length(ca1d.erlotinib[ca1d.erlotinib$Death,]$Lifespan)#
+observations <- sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)#
+a_tot <- events/observations
+lower_aq <- qchisq(0.025, 2*events)/2/observations#
+upper_aq <- qchisq(0.975, 2*(events+1))/2/observations
+lower_aq
+upper_aq
+confint(fit)
+split_tot <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {qbr <- prolif_q(br, y0, d1, q1, a1) dbr <- prolif_d(br, y0, d1, q1, a1) append(prolif_tot(t[t<=br], y0, d1, q1, a1),prolif_tot(t[t>br]-br, dbr, d2, q2, a2, qbr) )}split_q <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {qbr <- prolif_q(br, y0, d1, q1, a1) dbr <- prolif_d(br, y0, d1, q1, a1) append(prolif_q(t[t<=br], y0, d1, q1, a1),prolif_q(t[t>br]-br, dbr, d2, q2, a2, qbr) )}split_d <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {qbr <- prolif_q(br, y0, d1, q1, a1) dbr <- prolif_d(br, y0, d1, q1, a1) append(prolif_d(t[t<=br], y0, d1, q1, a1),prolif_d(t[t>br]-br, dbr, d2, q2, a2, qbr) )}split_fq <- function(t, y0, d1, d2, q1, q2, a1, a2, br) {split_q(t, y0, d1, d2, q1, q2, a1, a2, br) / split_tot(t, y0, d1, d2, q1, q2, a1, a2, br) }split_fd <- function(t, y0, d1, d2, q1, q2, a1, a2, br) {split_d(t, y0, d1, d2, q1, q2, a1, a2, br) / split_tot(t, y0, d1, d2, q1, q2, a1, a2, br) }
+split_tot <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {qbr <- prolif_q(br, y0, d1, q1, a1) dbr <- prolif_d(br, y0, d1, q1, a1) append(prolif_tot(t[t<=br], y0, d1, q1, a1),prolif_tot(t[t>br]-br, dbr, d2, q2, a2, qbr) )}split_q <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {qbr <- prolif_q(br, y0, d1, q1, a1) dbr <- prolif_d(br, y0, d1, q1, a1) append(prolif_q(t[t<=br], y0, d1, q1, a1),prolif_q(t[t>br]-br, dbr, d2, q2, a2, qbr) )}split_d <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {qbr <- prolif_q(br, y0, d1, q1, a1) dbr <- prolif_d(br, y0, d1, q1, a1) append(prolif_d(t[t<=br], y0, d1, q1, a1),prolif_d(t[t>br]-br, dbr, d2, q2, a2, qbr) )}
+split_tot <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {qbr <- prolif_q(br, y0, d1, q1, a1) dbr <- prolif_d(br, y0, d1, q1, a1) append(prolif_tot(t[t<=br], y0, d1, q1, a1),prolif_tot(t[t>br]-br, dbr, d2, q2, a2, qbr) )}
+split_tot <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {qbr <- prolif_q(br, y0, d1, q1, a1) dbr <- prolif_d(br, y0, d1, q1, a1)append(prolif_tot(t[t<=br], y0, d1, q1, a1),prolif_tot(t[t>br]-br, dbr, d2, q2, a2, qbr) )}
+split_tot <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {qbr <- prolif_q(br, y0, d1, q1, a1) dbr <- prolif_d(br, y0, d1, q1, a1)
+split_tot <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {qbr <- prolif_q(br, y0, d1, q1, a1)
+dbr <- prolif_d(br, y0, d1, q1, a1)
+append
+asdf_}
+?prolif_Q
+?prolif_q
+split_tot <- function(t, y0, d1, d2, q1, q2, a1, a2, br=20) {#
+  qbr <- prolif_q(br, y0, 0, d1, q1, a1, a1)#
+  dbr <- prolif_d(br, y0, 0, d1, q1, a1, a1)#
+  append(#
+    prolif_tot(t[t<=br], y0, 0, d1, q1, a1, a1),#
+    prolif_tot(t[t>br]-br, dbr, qbr, d2, q2, a2, a2) )#
+}
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))#
+      #
+model.total <- log(split(t, 1, r['d'], r['d'], r['q'], r['q'], 0, 0.03), 2)
+model.total <- log(split_tot(t, 1, r['d'], r['d'], r['q'], r['q'], 0, 0.03), 2)
+lines(t,model.total,col="green")
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))#
+      #
+model.total <- log(split_tot(t, 1, r['d'], r['d'], r['q'], r['q'], 0, 0.003), 2)#
+lines(t,model.total,col="green")
+split_tot <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br=20)#
+{#
+  qbr <- prolif_q(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  dbr <- prolif_d(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  append(#
+    prolif_tot(t[t<=br],    x0,  q0, d1, q1, ad1, aq1, ad2, aq2),#
+    prolif_tot(t[t>br]-br, dbr, qbr, d2, q2, ad1, aq1, ad2, aq2) )#
+}#
+#
+split_q <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br=20)#
+{#
+  qbr <- prolif_q(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  dbr <- prolif_d(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  append(#
+    prolif_q(t[t<=br],    x0,  q0, d1, q1, ad1, aq1, ad2, aq2),#
+    prolif_q(t[t>br]-br, dbr, qbr, d2, q2, ad1, aq1, ad2, aq2) )#
+}#
+#
+split_d <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br=20)#
+{#
+  qbr <- prolif_q(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  dbr <- prolif_d(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  append(#
+    prolif_d(t[t<=br],    x0,  q0, d1, q1, ad1, aq1, ad2, aq2),#
+    prolif_d(t[t>br]-br, dbr, qbr, d2, q2, ad1, aq1, ad2, aq2) )#
+}#
+#
+split_fq <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br)#
+{#
+  split_q(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br) /#
+  split_tot(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br)#
+}#
+#
+split_fd <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br)#
+{#
+  split_d(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br) /#
+  split_tot(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br)#
+}#
+#
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))#
+      #
+model.total <- log(split_tot(t, 1, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003), 2)#
+lines(t,model.total,col="green")
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], a_init, a_init, a_final, a_final, br), 2),#
+           start=list(a_init=0.001, a_final=0.001, br=6),#
+           lower=list(a=0, a_init=0, a_final=0, br=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], a_init, a_init, a_final, a_final, br), 2),#
+           start=list(a_init=0.001, a_final=0.001, br=6),#
+           lower=list(a_init=0, a_final=0, br=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+split_tot <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br=20)#
+{#
+  qbr <- prolif_q(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  dbr <- prolif_d(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  append(#
+    prolif_tot(t[t<=br],    x0,  q0, d1, q1, ad1, aq1, ad2, aq2),#
+    prolif_tot(t[t>br]-br, dbr, qbr, d2, q2, ad1, aq1, ad2, aq2) )#
+}#
+#
+split_q <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br=20)#
+{#
+  qbr <- prolif_q(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  dbr <- prolif_d(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  append(#
+    prolif_q(t[t<=br],    x0,  q0, d1, q1, ad1, aq1, ad2, aq2),#
+    prolif_q(t[t>br]-br, dbr, qbr, d2, q2, ad1, aq1, ad2, aq2) )#
+}#
+#
+split_d <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br=20)#
+{#
+  qbr <- prolif_q(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  dbr <- prolif_d(br, x0, q0, d1, q1, ad1, aq1, ad2, aq2)#
+  append(#
+    prolif_d(t[t<=br],    x0,  q0, d1, q1, ad1, aq1, ad2, aq2),#
+    prolif_d(t[t>br]-br, dbr, qbr, d2, q2, ad1, aq1, ad2, aq2) )#
+}#
+#
+split_fq <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br)#
+{#
+  split_q(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br) /#
+  split_tot(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br)#
+}#
+#
+split_fd <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br)#
+{#
+  split_d(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br) /#
+  split_tot(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br)#
+}
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], a_init, a_init, a_final, a_final, br), 2),#
+           start=list(a_init=0.001, a_final=0.001, br=6),#
+           lower=list(a_init=0, a_final=0, br=0),#
+           algorithm="port")
+split_tot <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br=20)#
+{#
+  qbr <- prolif_q(br, x0, q0, d1, q1, ad1, aq1)#
+  dbr <- prolif_d(br, x0, q0, d1, q1, ad1, aq1)#
+  append(#
+    prolif_tot(t[t<=br],    x0,  q0, d1, q1, ad1, aq1),#
+    prolif_tot(t[t>br]-br, dbr, qbr, d2, q2, ad2, aq2) )#
+}#
+#
+split_q <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br=20)#
+{#
+  qbr <- prolif_q(br, x0, q0, d1, q1, ad1, aq1)#
+  dbr <- prolif_d(br, x0, q0, d1, q1, ad1, aq1)#
+  append(#
+    prolif_q(t[t<=br],    x0,  q0, d1, q1, ad1, aq1),#
+    prolif_q(t[t>br]-br, dbr, qbr, d2, q2, ad2, aq2) )#
+}#
+#
+split_d <- function(t, x0, q0, d1, d2, q1, q2, ad1, aq1, ad2, aq2, br=20)#
+{#
+  qbr <- prolif_q(br, x0, q0, d1, q1, ad1, aq1)#
+  dbr <- prolif_d(br, x0, q0, d1, q1, ad1, aq1)#
+  append(#
+    prolif_d(t[t<=br],    x0,  q0, d1, q1, ad1, aq1),#
+    prolif_d(t[t>br]-br, dbr, qbr, d2, q2, ad2, aq2) )#
+}
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], a_init, a_init, a_final, a_final, br), 2),#
+           start=list(a_init=0.001, a_final=0.001, br=6),#
+           lower=list(a_init=0, a_final=0, br=0),#
+           algorithm="port")
+fit
+fit <- NULL
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], a_init, a_init, a_final, a_final, br), 2),#
+           start=list(a_init=0.001, a_final=0.001, br=6),#
+           lower=list(a_init=0, a_final=0, br=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a_final, a_final, br), 2),#
+           start=list(a_final=0.001, br=6),#
+           lower=list(a_final=0, br=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], a_init, a_init, a_final, a_final, br), 2),#
+           start=list(a_init=0.001, a_final=0.001, br=6),#
+           lower=list(a_init=0, a_final=0, br=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a_final, a_final, 6), 2),#
+           start=list(a_final=0.001),#
+           lower=list(a_final=0),#
+           algorithm="port")
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a_final, a_final, 6), 2),#
+           start=list(a_final=0.001),#
+           lower=list(a_final=0),#
+           algorithm="port")
+fit
+summary(fit)
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003, br), 2),#
+           start=list(br=6),#
+           lower=list(br=0),#
+           algorithm="port")
+fit
+r["d"]
+r["q"]
+y
+fit <- nls(y ~ log(prolif_tot(t, 1, 0, r['d'], r['q'], a, a, 2)),#
+           start=list(a=0.003),#
+           lower=list(a=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+library(fracprolif)
+?fracprolif
+install.packages("fracprolif", dependencies=TRUE)
+install.packages("emg", dependencies=TRUE)
+library(fracprolif)
+?fracprolif
+data(ca1d.erlotinib)
+d <- subset(ca1d.erlotinib, !Death & !is.na(Lifespan))#
+plot(d$Birthtime,#
+     d$Lifespan,#
+     main="CA1d 16µM erlotinib",#
+     xlab="Birth time (h)",#
+     ylab="Lifespan (h)",#
+     ylim=c(5,90), xlim=c(0,25))#
+n <- length(d$Lifespan)#
+text(20,80,substitute("n" == n,list(n=n)))#
+p <- 100*length(subset(d, End.of.Movie)$Lifespan) / n#
+text(15,85,substitute(p * "% EoE", list(p=round(p))))
+mitotic.lifespans <- subset(ca1d.erlotinib,  !End.of.Movie & #
+                                             !Death        & #
+                                             !is.na(Lifespan))$Lifespan#
+#
+censored.lifespans <- subset(ca1d.erlotinib, End.of.Movie  & #
+                                             !Death        & #
+                                             !is.na(Lifespan))$Lifespan
+hist(mitotic.lifespans,#
+     main='CA1d 16µM',#
+     sub="Observed Intermitotic Times (h)",#
+     breaks=20)
+ est <- q.mle.emg.estimate(mitotic.lifespans, censored.lifespans)#
+#
+  summary(est)
+hist(mitotic.lifespans,#
+     main='CA1d 16µM',#
+     xlab="Observed Intermitotic Times (h)",#
+     breaks=20,#
+     freq=FALSE)#
+curve(demg(x, coef(est)['mu'], coef(est)['sigma'], coef(est)['lambda']), add=TRUE, col='red', lwd=2)#
+text(40, 0.07, pos=4, labels=substitute("n"==n, list(n=length(mitotic.lifespans))))#
+text(40, 0.06, pos=4, labels=substitute(mu==m, list(m=round(coef(est)['mu'],2))))#
+text(40, 0.05, pos=4, labels=substitute(sigma==s, list(s=round(coef(est)['sigma'],2))))#
+text(40, 0.04, pos=4, labels=substitute(kappa==l, list(l=round(1/coef(est)['lambda'],2))))
+   mle(function(mean, sd, Q){#
+     qsurvival.nllik("norm", mitotic.lifespans, censored.lifespans, Q, mean, sd)#
+   },#
+   method='L-BFGS-B',#
+   lower=list(mean=8,  sd=0.1, Q=0.01),#
+   upper=list(mean=30, sd=20,  Q=0.9),#
+   start=list(mean=mean(mitotic.lifespans), #
+              sd=sd(mitotic.lifespans),#
+              Q = 0.5))
+r <- q.rates("emg", est)#
+r
+data(ca1d.erlotinib.totals)
+y <- ca1d.erlotinib.totals$e_16000 - ca1d.erlotinib.totals$e_16000[1]#
+t <- ca1d.erlotinib.totals$Time_h#
+#
+# Let the death rates float#
+fit <- nls(y ~ log(prolif_tot(t, 1, 0, r['d'], r['q'], a, a, 2)),#
+           start=list(a=0.003),#
+           lower=list(a=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+events <- length(ca1d.erlotinib[ca1d.erlotinib$Death,]$Lifespan)#
+observations <- sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)#
+a_tot <- events/observations
+lower_aq <- qchisq(0.025, 2*events)/2/observations#
+upper_aq <- qchisq(0.975, 2*(events+1))/2/observations
+lower_aq
+upper_aq
+confint(fit)
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))
+model.total <- log(prolif_tot(t, 1, 0, r['d'], r['q'], a['a'], a['a']), 2)#
+#
+lines(t,model.total,col="green")#
+lines(t,model.total*prolif_fq(t, 1, 0, r['d'], r['q'], a['a'], a['a']), col="red")#
+lines(t,model.total*prolif_fd(t, 1, 0, r['d'], r['q'], a['a'], a['a']), col="blue")#
+#
+text(2, 1.1, pos=4, substitute("d" == d, list(d=round(r['d'], 4))))#
+text(2, 1.0, pos=4, substitute("q" == q, list(q=round(r['q'], 4))))#
+text(2, 0.9, pos=4, substitute("a" == a, list(a=round(a['a'], 4))))
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003, br), 2),#
+           start=list(br=6),#
+           lower=list(br=0),#
+           upper=list(br=20)#
+           algorithm="port")
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003, br), 2),#
+           start=list(br=6),#
+           lower=list(br=0),#
+           upper=list(br=20),#
+           algorithm="port")#
+a <- coef(fit)
+fit
+?split_tot
+model.total <- log(split_tot(t, 1, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003, 20), 2)#
+lines(t,model.total,col="green")
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))#
+      #
+model.total <- log(split_tot(t, 1, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003, 20), 2)#
+lines(t,model.total,col="green")
+model.total <- log(split_tot(t, 1, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003, 6),
+2)
+model.total
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))#
+      #
+model.total <- log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003, 6), 2)#
+lines(t,model.total,col="green")
+model.total <- log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003, 20), 2)#
+lines(t,model.total,col="green")
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003, br), 2),#
+           start=list(br=6),#
+           lower=list(br=0),#
+           upper=list(br=60),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))#
+      #
+model.total <- log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, 0.003, 0.003, 31.75), 2)#
+lines(t,model.total,col="green")
+?fracprolif
+fit <- nls(y ~ log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a, a, br), 2),#
+           start=list(br=6, a=0.001),#
+           lower=list(br=0, a=0.0),#
+           upper=list(br=60, a=0.1),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+a
+lines(t,model.total*split_fq(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a['a'],a['a'],a['br']), col="red")
+lines(t,model.total*split_fd(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a['a'],a['a'],a['br']), col="blue")
+a
+confint(a)
+confint(fit)
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))#
+      #
+model.total <- log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a['a'], a['a'], a['br']), 2)#
+lines(t,model.total,col="green")#
+#
+lines(t,model.total*split_fq(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a['a'],a['a'],a['br']), col="red")#
+lines(t,model.total*split_fd(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a['a'],a['a'],a['br']), col="blue")#
+#
+text(2, 1.1, pos=4, substitute("d" == d, list(d=round(r['d'], 4))))#
+text(2, 1.0, pos=4, substitute("q" == q, list(q=round(r['q'], 4))))#
+text(2, 0.9, pos=4, substitute("a" == a, list(a=round(a['a'], 4))))
+?fracprolif
+#
+y <- ca1d.erlotinib.totals$e_16000 - ca1d.erlotinib.totals$e_16000[1]#
+t <- ca1d.erlotinib.totals$Time_h#
+#
+# Let the death rates float#
+fit <- nls(y ~ log(prolif_tot(t, 1, 0, r['d'], r['q'], a, a, 2)),#
+           start=list(a=0.003),#
+           lower=list(a=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)#
+#
+events <- length(ca1d.erlotinib[ca1d.erlotinib$Death,]$Lifespan)#
+observations <- sum(ca1d.erlotinib$Lifespan, na.rm=TRUE)#
+a_tot <- events/observations#
+#
+lower_aq <- qchisq(0.025, 2*events)/2/observations#
+upper_aq <- qchisq(0.975, 2*(events+1))/2/observations#
+c(lower_aq, upper_aq)#
+confint(fit)
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))#
+#
+model.total <- log(prolif_tot(t, 1, 0, r['d'], r['q'], a['a'], a['a']), 2)#
+#
+lines(t,model.total,col="green")#
+lines(t,model.total*prolif_fq(t, 1, 0, r['d'], r['q'], a['a'], a['a']), col="red")#
+lines(t,model.total*prolif_fd(t, 1, 0, r['d'], r['q'], a['a'], a['a']), col="blue")#
+#
+text(2, 1.1, pos=4, substitute("d" == d, list(d=round(r['d'], 4))))#
+text(2, 1.0, pos=4, substitute("q" == q, list(q=round(r['q'], 4))))#
+text(2, 0.9, pos=4, substitute("a" == a, list(a=round(a['a'], 4))))
+ks.test(mitotic.lifespans, "pemg", #
+        mu=coef(est)['mu'],#
+        sigma=coef(est)['sigma'],#
+        lambda=coef(est)['lambda'])
+hist(mitotic.lifespans,#
+     main='CA1d 16µM',#
+     xlab="Observed Intermitotic Times (h)",#
+     breaks=20,#
+     freq=FALSE)#
+curve(demg(x, coef(est)['mu'], coef(est)['sigma'], coef(est)['lambda']), add=TRUE, col='red', lwd=2)#
+text(40, 0.07, pos=4, labels=substitute("n"==n, list(n=length(mitotic.lifespans))))#
+text(40, 0.06, pos=4, labels=substitute(mu==m, list(m=round(coef(est)['mu'],2))))#
+text(40, 0.05, pos=4, labels=substitute(sigma==s, list(s=round(coef(est)['sigma'],2))))#
+text(40, 0.04, pos=4, labels=substitute(kappa==l, list(l=round(1/coef(est)['lambda'],2))))
+ks.test(mitotic.lifespans, "pemg", #
+        mu=coef(est)['mu'],#
+        sigma=coef(est)['sigma'],#
+        lambda=coef(est)['lambda'])
+ks.test(mitotic.lifespans, "pemg", #
+        mu=coef(est)['mu'],#
+        sigma=coef(est)['sigma'],#
+        lambda=coef(est)['lambda'])
+ks <- ks.test(mitotic.lifespans, "pemg", #
+        mu=coef(est)['mu'],#
+        sigma=coef(est)['sigma'],#
+        lambda=coef(est)['lambda'])
+ks
+ks['p-value']
+names(ks)
+ks$p.value
+text(40, 0.05, pos=4, labels=substitute("ks p-value"==p, list(p=ks$p.value)))
+hist(mitotic.lifespans,#
+     main='CA1d 16µM',#
+     xlab="Observed Intermitotic Times (h)",#
+     breaks=20,#
+     freq=FALSE)#
+curve(demg(x, coef(est)['mu'], coef(est)['sigma'], coef(est)['lambda']), add=TRUE, col='red', lwd=2)#
+text(40, 0.07, pos=4, labels=substitute("n"==n, list(n=length(mitotic.lifespans))))#
+text(40, 0.065, pos=4, labels=substitute(mu==m, list(m=round(coef(est)['mu'],2))))#
+text(40, 0.06, pos=4, labels=substitute(sigma==s, list(s=round(coef(est)['sigma'],2))))#
+text(40, 0.055, pos=4, labels=substitute(kappa==l, list(l=round(1/coef(est)['lambda'],2))))
+ks <- ks.test(mitotic.lifespans, "pemg", #
+              mu=coef(est)['mu'],#
+              sigma=coef(est)['sigma'],#
+              lambda=coef(est)['lambda'])#
+        #
+text(40, 0.05, pos=4, labels=substitute("ks p-value"==p, list(p=ks$p.value)))
+hist(mitotic.lifespans,#
+     main='CA1d 16µM',#
+     xlab="Observed Intermitotic Times (h)",#
+     breaks=20,#
+     freq=FALSE)#
+curve(demg(x, coef(est)['mu'], coef(est)['sigma'], coef(est)['lambda']), add=TRUE, col='red', lwd=2)#
+text(40, 0.07, pos=4, labels=substitute("n"==n, list(n=length(mitotic.lifespans))))#
+text(40, 0.065, pos=4, labels=substitute(mu==m, list(m=round(coef(est)['mu'],2))))#
+text(40, 0.06, pos=4, labels=substitute(sigma==s, list(s=round(coef(est)['sigma'],2))))#
+text(40, 0.055, pos=4, labels=substitute(kappa==l, list(l=round(1/coef(est)['lambda'],2))))
+ks <- ks.test(mitotic.lifespans, "pemg", #
+              mu=coef(est)['mu'],#
+              sigma=coef(est)['sigma'],#
+              lambda=coef(est)['lambda'])#
+        #
+text(40, 0.05, pos=4, labels=substitute("ks p-value"==p, list(p=round(ks$p.value,2))))
+c(lower_aq, upper_aq)#
+confint(fit)
+fit <- nls(y ~ log(prolif_tot(t, 1, 0, r['d'], r['q'], a, a, 2)),#
+           start=list(a=0.003),#
+           lower=list(a=0),#
+           algorithm="port")#
+a <- coef(fit)#
+summary(fit)
+c(lower_aq, upper_aq)#
+confint(fit)
+plot (t, y, #
+      main="CA1d 16µM",#
+      xlab="Time (h)",#
+      ylab="Population Doublings",#
+      ylim=c(0,1.2), xlim=c(0,96))#
+      #
+model.total <- log(split_tot(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a['a'], a['a'], a['br']), 2)#
+lines(t,model.total,col="green")#
+#
+lines(t,model.total*split_fq(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a['a'],a['a'],a['br']), col="red")#
+lines(t,model.total*split_fd(t, 1, 0, r['d'], r['d'], r['q'], r['q'], 0, 0, a['a'],a['a'],a['br']), col="blue")#
+#
+text(2, 1.1, pos=4, substitute("d" == d, list(d=round(r['d'], 4))))#
+text(2, 1.0, pos=4, substitute("q" == q, list(q=round(r['q'], 4))))#
+text(2, 0.9, pos=4, substitute("a" == a, list(a=round(a['a'], 4))))
+d <- read.csv("~/Dropbox/2010-11-22 CA1d pop growth copy.csv")
+d <- read.csv("~/Dropbox/Shawn/2010-11-22 CA1d pop growth copy.csv")
+head(d)
+setwd("~/Projects/work/tysondr/fracprolif/data")
+ca1d.erlotinib.totals <- d
+save(ca1d.erlotinib.totals, file="ca1d.erlotinib.totals.rda")
+data(ca1d.erlotinib.totals)
+head(ca1d.erlotinib.totals)
