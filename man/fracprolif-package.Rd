@@ -6,7 +6,7 @@
 Fractional Proliferation.
 }
 \description{
-This package contains all the functions necessary for analyzing population size based on the behavior of individual members within the population based on a methodology termed Fractional Proliferation. The methodology was specifically designed to analyze the behavior of a population of cultured cells and requires fitting data to a newly developed model of proliferation, the Quiescence-Growth Model (see below). This package contains functions to determine rates of division (d) quiescence (q) and apoptosis (a) as well as predict the change in the fraction of cells within the dividing and nondividing compartments over time.
+This package contains all the functions necessary for analyzing population size based on the behavior of individual members within the population using a methodology termed Fractional Proliferation. The methodology was specifically designed to analyze the behavior of a population of cultured cells and requires fitting data to a newly developed model of proliferation, the Quiescence-Growth Model (see below). This package contains functions to determine rates of division (d) quiescence (q) and apoptosis (a) as well as predict the change in the fraction of cells within the dividing and nondividing compartments over time.
 }
 
 \section{Quiescence-Growth Model}{
@@ -48,13 +48,13 @@ To view the scatterplot of birthtime versus lifespan of the cell behaviors in 16
 d <- subset(ca1d.erlotinib, !Death & !is.na(Lifespan))
 plot(d$Birthtime,
      d$Lifespan,
-     main="CA1d 16microM erlotinib",
+     main="CA1d 16micromolar erlotinib",
      xlab="Birth time (h)",
      ylab="Lifespan (h)",
      ylim=c(5,90), xlim=c(0,25))
 n <- length(d$Lifespan)
 text(20,80,substitute("n" == n,list(n=n)))
-p <- 100*length(subset(d, End.of.Movie)$Lifespan) / n
+p <- 100*length(subset(d, End.of.Expt)$Lifespan) / n
 text(15,85,substitute(p * "\% EoE", list(p=round(p))))
 }
 
@@ -63,14 +63,14 @@ This plot shows the raw data with the birth time of a cell in the experiment plo
 
 \section{Example - Intermitotic Time Distribution}{
 
-To view the intermitotic time distribution (i.e. the distribution of cell cycle times) the data \code{\link{ca1d.erlotinib}} must first be split into \code{mitotic.lifespans}, which include cells that divide before the end of the movie, and \code{censored.lifespans} that reach the end of the movie without division, excluding death events. 
+To view the intermitotic time distribution (i.e. the distribution of cell cycle times) the data \code{\link{ca1d.erlotinib}} must first be split into \code{mitotic.lifespans}, which include cells that divide before the end of the experiment, and \code{censored.lifespans} that reach the end of the experiment without division, excluding death events. 
 
 \preformatted{
-mitotic.lifespans <- subset(ca1d.erlotinib,  !End.of.Movie & 
+mitotic.lifespans <- subset(ca1d.erlotinib,  !End.of.Expt & 
                                              !Death        & 
                                              !is.na(Lifespan))$Lifespan
 
-censored.lifespans <- subset(ca1d.erlotinib, End.of.Movie  & 
+censored.lifespans <- subset(ca1d.erlotinib, End.of.Expt  & 
                                              !Death        & 
                                              !is.na(Lifespan))$Lifespan
 }
@@ -80,7 +80,7 @@ An exponentially growing population of CA1d cells have intermitotic times that c
 \preformatted{
 
 hist(mitotic.lifespans,
-     main='CA1d 16microM',
+     main='CA1d 16micromolar erlotinib',
      sub="Observed Intermitotic Times (h)",
      breaks=20)
 }
@@ -100,7 +100,7 @@ summary(est)
 Using this estimate we can visualize the fit with the following:
 \preformatted{
 hist(mitotic.lifespans,
-     main='CA1d 16microM',
+     main='CA1d 16micromolar erlotinib',
      xlab="Observed Intermitotic Times (h)",
      breaks=20,
      freq=FALSE)
@@ -197,7 +197,7 @@ Now with the death rate parameters estimated, we can plot the resulting model as
 
 \preformatted{
 plot (t, y, 
-      main="CA1d 16microM",
+      main="CA1d 16micromolar erlotinib",
       xlab="Time (h)",
       ylab="Population Doublings",
       ylim=c(0,1.5))
@@ -235,8 +235,8 @@ Ulm (1990). Simple method to calculate the confidence interval of a standardized
 \tabular{ll}{
 Package: \tab fracprolif\cr
 Type: \tab Package\cr
-Version: \tab 1.0.01\cr
-Date: \tab 2012-04-19\cr
+Version: \tab 1.0.2\cr
+Date: \tab 2012-04-25\cr
 License: \tab GPL-2\cr
 }
 }

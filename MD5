@@ -1,4 +1,4 @@
-64a262eeab212703ceaa9c9ab1a842e3 *DESCRIPTION
+8f5eac8a7337e3b1873e39dd1276eb75 *DESCRIPTION
 a0186f70cc54d9df0fc4d8931949c27c *LICENSE
 5fd751c2405cc37cae925fd8fa21636f *NAMESPACE
 f6fc1fe26a27f10e0d946f97ecb0ac8c *R/prolif_d.R
@@ -15,7 +15,7 @@ e5ed3ba6c99610fa0bc5a9f4178a4bcb *R/qsurvival.nllik.R
 9c32e6febd87fa9e6b1349d12e59b4bd *data/ca1d.erlotinib.totals.rda
 ebf6cac4585808e7a001566730642a2e *man/ca1d.erlotinib.Rd
 f17d74078f0bde86cc95689c5a6693cb *man/ca1d.erlotinib.totals.Rd
-047f08a3033d9a1d85101dd37e250e1c *man/fracprolif-package.Rd
+2649ffb8518bbb9432d52eeb6bfee930 *man/fracprolif-package.Rd
 a89959d59e68d27a95a5b6246ce36c12 *man/prolif_d.Rd
 d6680d832966b86382c0fd525025ce0f *man/prolif_fd.Rd
 c8a1861e68c1c11b5815e047d768810b *man/prolif_fq.Rd
