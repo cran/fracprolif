@@ -1,11 +1,12 @@
 \name{q.rates}
 \alias{q.rates}
+\alias{qrate-show}
 
 \title{
 Estimate Quiescence-Growth Model Rates
 }
 \description{
-Given an mle estimate of the distribution parameters transform into rates of growth and quiescence. 
+Given an mle estimate of the distribution parameters transform into rates of growth and quiescence. The transformation into a growth rate is the exact method of Powell. The quiescence rate uses Poisson estimation. Standard errors are computed using the numerical delta method.
 }
 \usage{
 q.rates(dist, est)
@@ -17,7 +18,7 @@ q.rates(dist, est)
 }
 
 \value{
-A vector containing (d) the growth rate and (q) the quiescence rate.
+An object of \code{\link[base:class]{class}} q_rate containing (d) the growth rate and (q) the quiescence rate as a numeric vector, as well as additional attributes of stderr, n and df used.
 }
 \references{
 The method of determining growth rate is taken from \cite{POWELL E.0. (1956). Growth Rate and Generation Time of Bacteria, with Special Reference to Continuous Culture. J.Gen.Microbial V15,492-511}. This makes a robust estimator in the presence of skewed distributions.

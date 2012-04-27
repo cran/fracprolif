@@ -66,12 +66,12 @@ This plot shows the raw data with the birth time of a cell in the experiment plo
 To view the intermitotic time distribution (i.e. the distribution of cell cycle times) the data \code{\link{ca1d.erlotinib}} must first be split into \code{mitotic.lifespans}, which include cells that divide before the end of the experiment, and \code{censored.lifespans} that reach the end of the experiment without division, excluding death events. 
 
 \preformatted{
-mitotic.lifespans <- subset(ca1d.erlotinib,  !End.of.Expt & 
-                                             !Death        & 
+mitotic.lifespans <- subset(ca1d.erlotinib,  !End.of.Expt &
+                                             !Death       &
                                              !is.na(Lifespan))$Lifespan
 
-censored.lifespans <- subset(ca1d.erlotinib, End.of.Expt  & 
-                                             !Death        & 
+censored.lifespans <- subset(ca1d.erlotinib, End.of.Expt  &
+                                             !Death       &
                                              !is.na(Lifespan))$Lifespan
 }
 
@@ -235,8 +235,8 @@ Ulm (1990). Simple method to calculate the confidence interval of a standardized
 \tabular{ll}{
 Package: \tab fracprolif\cr
 Type: \tab Package\cr
-Version: \tab 1.0.2\cr
-Date: \tab 2012-04-25\cr
+Version: \tab 1.0.3\cr
+Date: \tab 2012-04-27\cr
 License: \tab GPL-2\cr
 }
 }
