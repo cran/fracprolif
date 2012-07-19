@@ -1,6 +1,5 @@
 \name{q.rates}
 \alias{q.rates}
-\alias{qrate-show}
 
 \title{
 Estimate Quiescence-Growth Model Rates
@@ -45,5 +44,10 @@ The method of determining growth rate is taken from \cite{POWELL E.0. (1956). Gr
     subset(ca1d.erlotinib, End.of.Expt  & 
                            !Death        & 
                            !is.na(Lifespan))$Lifespan
-  q.rates("emg", q.mle.emg.estimate(mitotic.lifespans, censored.lifespans))
+  r <- q.rates("emg", q.mle.emg.estimate(mitotic.lifespans, censored.lifespans))
+  
+  summary(r)
+  
+  r['d'] # Rate of division
+  r['q'] # Rate of quiescense
 }

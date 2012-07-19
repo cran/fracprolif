@@ -224,7 +224,7 @@ Maintainer: Shawn Garbett <Shawn.Garbett@Vanderbilt.edu>
 }
 
 \references{
-Paper under review by Nature Methods.
+Darren R. Tyson, Shawn P. Garbett, Peter L. Frick and Vito Quaranta (2012) Fractional Proliferation: A method to deconvolve cell population dynamics from single-cell data. Nature Methods (In Press)
 
 The method of determining growth rate is taken from \cite{Powell E.0. (1956). Growth Rate and Generation Time of Bacteria, with Special Reference to Continuous Culture. J.Gen.Microbial V15,492-511}. This makes a robust estimator in the presence of skewed distributions.
 
@@ -235,8 +235,8 @@ Ulm (1990). Simple method to calculate the confidence interval of a standardized
 \tabular{ll}{
 Package: \tab fracprolif\cr
 Type: \tab Package\cr
-Version: \tab 1.0.3\cr
-Date: \tab 2012-04-27\cr
+Version: \tab 1.0.4\cr
+Date: \tab 2012-07-19\cr
 License: \tab GPL-2\cr
 }
 }

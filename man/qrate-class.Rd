@@ -3,6 +3,7 @@
 \docType{class}
 \alias{qrate-class}
 \alias{show,qrate-method}
+\alias{summary,qrate-method}
 
 \title{Class \code{"qrate"}}
 \description{

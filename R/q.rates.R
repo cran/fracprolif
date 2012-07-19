@@ -38,16 +38,26 @@ q.rates <- function(dist, est)
    attr(v, "n")  <- n
    attr(v, "df") <- n-2
    
+   attr(v, "names") <- c("d", "q")
+   
    v
 }
 
 setMethod("show","qrate", 
   function(object)
+  {
+     cat("         d          q\n")
+     cat(object, "\n")
+  }
+)
+
+setMethod("summary","qrate", 
+  function(object)
   { 
      cat("         d          q\n")
      cat(object)
      cat("\n\n")
-     cat("Standard Error\n")
+     cat("       se(d)        se(q)\n")
      cat(object@stderr)
      cat("\n\n")
      cat("n  = ")
@@ -57,4 +67,3 @@ setMethod("show","qrate",
      cat(object@df)
   }
 )
-
