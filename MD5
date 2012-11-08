@@ -1,4 +1,4 @@
-0b2d1d724bc023733d5f1aa13f945712 *DESCRIPTION
+8c86218bab08f1784da3b114f8f13b12 *DESCRIPTION
 a0186f70cc54d9df0fc4d8931949c27c *LICENSE
 5a8a146a012b936c99a722d8a397e999 *NAMESPACE
 f6fc1fe26a27f10e0d946f97ecb0ac8c *R/prolif_d.R
@@ -10,12 +10,12 @@ f6fc1fe26a27f10e0d946f97ecb0ac8c *R/prolif_d.R
 49fc03b7ce71106d88a640fd8bc4acf4 *R/q.mle.norm.estimate.R
 79acca292c5c1fb2640669835b64b37d *R/q.rates.R
 e5ed3ba6c99610fa0bc5a9f4178a4bcb *R/qsurvival.nllik.R
-9142af05d3a6f6f50c7f08ff0dc52081 *R/split.R
+c3373cfbf6462c60d61443132f8ef812 *R/split.R
 7c25ce97bf2caa1462755b74ca008e85 *data/ca1d.erlotinib.rda
 9c32e6febd87fa9e6b1349d12e59b4bd *data/ca1d.erlotinib.totals.rda
 ebf6cac4585808e7a001566730642a2e *man/ca1d.erlotinib.Rd
 f17d74078f0bde86cc95689c5a6693cb *man/ca1d.erlotinib.totals.Rd
-0a3e1b0ab55a761fc36f6eb0cdc6fcd4 *man/fracprolif-package.Rd
+03a53e1e34e7b75d4f491183b8cd3ffd *man/fracprolif-package.Rd
 a89959d59e68d27a95a5b6246ce36c12 *man/prolif_d.Rd
 d6680d832966b86382c0fd525025ce0f *man/prolif_fd.Rd
 c8a1861e68c1c11b5815e047d768810b *man/prolif_fq.Rd

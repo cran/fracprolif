@@ -235,8 +235,8 @@ Ulm (1990). Simple method to calculate the confidence interval of a standardized
 \tabular{ll}{
 Package: \tab fracprolif\cr
 Type: \tab Package\cr
-Version: \tab 1.0.4\cr
-Date: \tab 2012-07-19\cr
+Version: \tab 1.0.5\cr
+Date: \tab 2012-11-08\cr
 License: \tab GPL-2\cr
 }
 }
