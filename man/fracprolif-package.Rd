@@ -220,7 +220,7 @@ Plotted on a log(2) scale, which shows doublings, the circles are the experiment
 Darren Tyson, Shawn Garbett
 Vanderbilt University
 
-Maintainer: Shawn Garbett <Shawn.Garbett@Vanderbilt.edu>
+Maintainer: Shawn Garbett <Shawn@Garbett.org>
 }
 
 \references{

@@ -33,7 +33,7 @@ Class \code{"\linkS4class{vector}"}, by class "numeric", distance 2.
 Standard errors are derived by the delta method. See: Casella, G. and Berger, R. L. (2002), Statistical Inference, 2nd ed.
 }
 \author{
-Shawn Garbett <Shawn.Garbett@Vanderbilt.edu>
+Shawn Garbett
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~

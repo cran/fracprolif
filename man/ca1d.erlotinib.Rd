@@ -18,8 +18,6 @@ CA1d cells were plated on a 96-well plate and imaged on a BD Pathway 855 every 1
     \item Create \code{Lifespan} column in hours by multiplying \code{(End.frame - Birth.frame)} by 1/5.
 }
 
-A movie is provided at the \href{http://ccsb.vanderbilt.edu/ccsb/files/ccsb/CA1d.erlotinib.mov}{CCSB@Vanderbilt website}.
-
 Information about the cell line used (CA1d) can be found in the following reference: \cite{Fred R. Miller, Herbert D. Soule, Larty Tait, Robert J. Pauley, Sandra R. Wolman, Peter J. Dawson, and Gloria H. Heppner. Xenograft Model of Progressive Human Proliferative Breast Disease.
 JNCI J Natl Cancer Inst (1993) 85(21): 1725-1732 doi:10.1093/jnci/85.21.1725}
 
