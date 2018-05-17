@@ -231,16 +231,6 @@ The method of determining growth rate is taken from \cite{Powell E.0. (1956). Gr
 Ulm (1990). Simple method to calculate the confidence interval of a standardized mortality ratio (SMR). Am. J. Epidemiol. V131 (2): 373-375.
 }
 
-\details{
-\tabular{ll}{
-Package: \tab fracprolif\cr
-Type: \tab Package\cr
-Version: \tab 1.0.5\cr
-Date: \tab 2012-11-08\cr
-License: \tab GPL-2\cr
-}
-}
-
 \keyword{ package, quiescence, growth }
 \seealso{
 \code{\link[emg:emg-package]{emg}}

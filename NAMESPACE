@@ -13,3 +13,5 @@ import(
 )
 
 exportClasses(qrate)
+
+importFrom("stats", "integrate", "median", "sd", "uniroot")
